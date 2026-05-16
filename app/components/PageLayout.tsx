@@ -1,7 +1,7 @@
 import {useParams, Await, useRouteLoaderData} from '@remix-run/react';
 import useWindowScroll from 'react-use/esm/useWindowScroll';
 import {Disclosure} from '@headlessui/react';
-import {Suspense, useEffect, useMemo, useState} from 'react';
+import {Suspense, useEffect, useMemo} from 'react';
 import {CartForm} from '@shopify/hydrogen';
 
 import {type LayoutQuery} from 'storefrontapi.generated';
@@ -11,13 +11,14 @@ import {Cart} from '~/components/Cart';
 import {CartLoading} from '~/components/CartLoading';
 import {Drawer, useDrawer} from '~/components/Drawer';
 import {CountrySelector} from '~/components/CountrySelector';
+import {AnnouncementBar} from '~/components/AnnouncementBar';
 import {
   IconMenu,
   IconCaret,
-  IconLogin,
-  IconAccount,
   IconBag,
   IconSearch,
+  IconLogin,
+  IconAccount,
   IconClose,
 } from '~/components/Icon';
 import {
@@ -41,6 +42,7 @@ export function PageLayout({children, layout}: LayoutProps) {
   const {headerMenu, footerMenu} = layout || {};
   return (
     <>
+      <AnnouncementBar />
       <div className="flex flex-col min-h-screen">
         <a href="#mainContent" className="sr-only">Skip to content</a>
         {headerMenu && layout?.shop.name && (
@@ -94,7 +96,7 @@ function CartDrawer({isOpen, onClose}: {isOpen: boolean; onClose: () => void}) {
 
 export function MenuDrawer({isOpen, onClose, menu}: {isOpen: boolean; onClose: () => void; menu: EnhancedMenu}) {
   return (
-    <Drawer open={isOpen} onClose={onClose} openFrom="left" heading="Menú">
+    <Drawer open={isOpen} onClose={onClose} openFrom="left" heading="Menu">
       <div className="grid">
         <MenuMobileNav menu={menu} onClose={onClose} />
       </div>
@@ -113,7 +115,7 @@ function MenuMobileNav({menu, onClose}: {menu: EnhancedMenu; onClose: () => void
             onClick={onClose}
             className={({isActive}) =>
               `block px-6 py-4 border-b border-white/10 uppercase tracking-widest text-sm font-medium transition-colors ${
-                isActive ? 'text-[#C9A84C]' : 'text-white/80 hover:text-[#C9A84C]'
+                isActive ? "text-[#C9A84C]" : "text-white/80 hover:text-[#C9A84C]"
               }`
             }
           >
@@ -125,7 +127,6 @@ function MenuMobileNav({menu, onClose}: {menu: EnhancedMenu; onClose: () => void
   );
 }
 
-// ─── MOBILE HEADER ───────────────────────────────────────────
 function MobileHeader({title, isHome, openCart, openMenu}: {
   title: string; isHome: boolean; openCart: () => void; openMenu: () => void;
 }) {
@@ -136,33 +137,33 @@ function MobileHeader({title, isHome, openCart, openMenu}: {
   return (
     <header
       role="banner"
-      className={`flex lg:hidden flex-col sticky top-0 z-40 w-full transition-all duration-300 ${
-        scrolled ? 'bg-[#0A0F1E]/98 backdrop-blur-xl shadow-lg' : 'bg-[#0A0F1E]'
+      className={`flex lg:hidden sticky top-0 z-40 w-full transition-all duration-300 ${
+        scrolled ? "bg-[#0A0F1E]/98 backdrop-blur-xl shadow-lg" : "bg-[#0A0F1E]"
       } border-b border-white/10`}
     >
-      {/* Fila única móvil: hamburguesa | logo | iconos */}
-      <div className="flex items-center justify-between h-16 px-4">
-        <button
-          onClick={openMenu}
-          className="flex items-center justify-center w-9 h-9 text-white/80 hover:text-[#C9A84C] transition-colors"
-          aria-label="Abrir menú"
-        >
-          <IconMenu />
-        </button>
-
-        <Link to="/" prefetch="intent" className="flex items-center justify-center">
-          <img src="/images/logo.jpg" alt={title} className="h-10 w-auto object-contain" />
-        </Link>
-
-        <div className="flex items-center gap-2">
+      <div className="relative flex items-center w-full h-16 px-4">
+        <div className="flex items-center w-10">
+          <button
+            onClick={openMenu}
+            className="flex items-center justify-center w-9 h-9 text-white/80 hover:text-[#C9A84C] transition-colors"
+            aria-label="Abrir menu"
+          >
+            <IconMenu />
+          </button>
+        </div>
+        <div className="absolute left-1/2 -translate-x-1/2">
+          <Link to="/" prefetch="intent">
+            <img src="/images/logo.jpg" alt={title} className="h-10 w-auto object-contain" />
+          </Link>
+        </div>
+        <div className="flex items-center justify-end gap-1 ml-auto">
           <Link
-            to={params.locale ? `/${params.locale}/search` : '/search'}
+            to={params.locale ? `/${params.locale}/search` : "/search"}
             className="flex items-center justify-center w-9 h-9 text-white/80 hover:text-[#C9A84C] transition-colors"
             aria-label="Buscar"
           >
             <IconSearch />
           </Link>
-          <AccountLink className="flex items-center justify-center w-9 h-9 text-white/80 hover:text-[#C9A84C] transition-colors" />
           <CartCount isHome={isHome} openCart={openCart} />
         </div>
       </div>
@@ -170,7 +171,6 @@ function MobileHeader({title, isHome, openCart, openMenu}: {
   );
 }
 
-// ─── DESKTOP HEADER (2 filas como Napoleone) ─────────────────
 function DesktopHeader({isHome, menu, openCart, title}: {
   isHome: boolean; openCart: () => void; menu?: EnhancedMenu; title: string;
 }) {
@@ -183,45 +183,33 @@ function DesktopHeader({isHome, menu, openCart, title}: {
     <header
       role="banner"
       className={`hidden lg:flex flex-col sticky top-0 z-40 w-full transition-all duration-300 ${
-        scrolled ? 'bg-[#0A0F1E]/98 backdrop-blur-xl shadow-lg shadow-black/40' : 'bg-[#0A0F1E]'
+        scrolled ? "bg-[#0A0F1E]/98 backdrop-blur-xl shadow-lg shadow-black/40" : "bg-[#0A0F1E]"
       } border-b border-white/10`}
     >
-      {/* FILA 1: Logo centrado + iconos derecha */}
       <div className="w-full border-b border-white/5">
-        <div className="max-w-7xl mx-auto px-8 flex items-center justify-between h-20">
-
-          {/* Espacio izquierdo vacío para centrar logo */}
-          <div className="w-1/3" />
-
-          {/* Logo centrado */}
-          <div className="flex items-center justify-center w-1/3">
+        <div className="relative max-w-7xl mx-auto px-8 flex items-center justify-center h-20">
+          <div className="absolute left-1/2 -translate-x-1/2">
             <Link to="/" prefetch="intent">
               <img
                 src="/images/logo.jpg"
                 alt={title}
-                className={`object-contain transition-all duration-300 ${scrolled ? 'h-12' : 'h-16'}`}
+                className={`object-contain transition-all duration-300 ${scrolled ? "h-12" : "h-16"}`}
               />
             </Link>
           </div>
-
-          {/* Iconos derecha */}
-          <div className="flex items-center justify-end gap-4 w-1/3">
+          <div className="absolute right-8 flex items-center gap-4">
             <Link
-              to={params.locale ? `/${params.locale}/search` : '/search'}
+              to={params.locale ? `/${params.locale}/search` : "/search"}
               className="flex items-center gap-2 text-white/70 hover:text-[#C9A84C] transition-colors text-sm uppercase tracking-widest"
               aria-label="Buscar"
             >
               <IconSearch />
               <span className="hidden xl:block">Buscar</span>
             </Link>
-            <AccountLink className="flex items-center justify-center w-8 h-8 text-white/70 hover:text-[#C9A84C] transition-colors" />
             <CartCount isHome={isHome} openCart={openCart} />
           </div>
-
         </div>
       </div>
-
-      {/* FILA 2: Menú de categorías horizontalmente */}
       <div className="w-full">
         <nav className="max-w-7xl mx-auto px-8 flex items-center justify-center gap-0 h-11">
           {items.map((item) => (
@@ -233,8 +221,8 @@ function DesktopHeader({isHome, menu, openCart, title}: {
               className={({isActive}) =>
                 `px-5 py-3 uppercase tracking-[0.15em] text-xs font-medium transition-all duration-200 border-b-2 h-full flex items-center ${
                   isActive
-                    ? 'text-[#C9A84C] border-[#C9A84C]'
-                    : 'text-white/70 hover:text-[#C9A84C] border-transparent hover:border-[#C9A84C]/50'
+                    ? "text-[#C9A84C] border-[#C9A84C]"
+                    : "text-white/70 hover:text-[#C9A84C] border-transparent hover:border-[#C9A84C]/50"
                 }`
               }
             >
@@ -243,22 +231,7 @@ function DesktopHeader({isHome, menu, openCart, title}: {
           ))}
         </nav>
       </div>
-
     </header>
-  );
-}
-
-function AccountLink({className}: {className?: string}) {
-  const rootData = useRouteLoaderData<RootLoader>('root');
-  const isLoggedIn = rootData?.isLoggedIn;
-  return (
-    <Link to="/account" className={className}>
-      <Suspense fallback={<IconLogin />}>
-        <Await resolve={isLoggedIn} errorElement={<IconLogin />}>
-          {(isLoggedIn) => (isLoggedIn ? <IconAccount /> : <IconLogin />)}
-        </Await>
-      </Suspense>
-    </Link>
   );
 }
 
@@ -302,7 +275,6 @@ function Badge({openCart, dark, count}: {count: number; dark: boolean; openCart:
   );
 }
 
-// ─── FOOTER ──────────────────────────────────────────────────
 function Footer({menu}: {menu?: EnhancedMenu}) {
   const isHome = useIsHomePath();
   const itemsCount = menu
@@ -311,7 +283,7 @@ function Footer({menu}: {menu?: EnhancedMenu}) {
 
   return (
     <Section
-      divider={isHome ? 'none' : 'top'}
+      divider={isHome ? "none" : "top"}
       as="footer"
       role="contentinfo"
       className={`grid min-h-[25rem] items-start grid-flow-row w-full gap-6 py-8 px-6 md:px-8 lg:px-12 md:gap-8 lg:gap-12 grid-cols-1 md:grid-cols-2 lg:grid-cols-${itemsCount} bg-[#060912] text-white/60 overflow-hidden border-t border-white/10`}
@@ -326,14 +298,14 @@ function Footer({menu}: {menu?: EnhancedMenu}) {
 }
 
 function FooterLink({item}: {item: ChildEnhancedMenuItem}) {
-  if (item.to.startsWith('http')) {
+  if (item.to.startsWith("http")) {
     return <a href={item.to} target={item.target} rel="noopener noreferrer">{item.title}</a>;
   }
   return <Link to={item.to} target={item.target} prefetch="intent">{item.title}</Link>;
 }
 
 function FooterMenu({menu}: {menu?: EnhancedMenu}) {
-  const styles = {section: 'grid gap-4', nav: 'grid gap-2 pb-6'};
+  const styles = {section: "grid gap-4", nav: "grid gap-2 pb-6"};
   return (
     <>
       {(menu?.items || []).map((item) => (
@@ -345,12 +317,12 @@ function FooterMenu({menu}: {menu?: EnhancedMenu}) {
                   <Heading className="flex justify-between text-white/80 uppercase tracking-widest text-xs" size="lead" as="h3">
                     {item.title}
                     {item?.items?.length > 0 && (
-                      <span className="md:hidden"><IconCaret direction={open ? 'up' : 'down'} /></span>
+                      <span className="md:hidden"><IconCaret direction={open ? "up" : "down"} /></span>
                     )}
                   </Heading>
                 </Disclosure.Button>
                 {item?.items?.length > 0 ? (
-                  <div className={`${open ? 'max-h-48 h-fit' : 'max-h-0 md:max-h-fit'} overflow-hidden transition-all duration-300`}>
+                  <div className={`${open ? "max-h-48 h-fit" : "max-h-0 md:max-h-fit"} overflow-hidden transition-all duration-300`}>
                     <Suspense data-comment="This suspense fixes a hydration bug in Disclosure.Panel with static prop">
                       <Disclosure.Panel static>
                         <nav className={styles.nav}>

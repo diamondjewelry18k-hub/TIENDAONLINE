@@ -99,11 +99,17 @@ export default function Homepage() {
         >
           <SwiperSlide>
             <div className="relative h-screen">
-              <img
-                src="/images/banner1.jpg"
-                alt="Banner de joyería" 
-                className="absolute inset-0 w-full h-full object-cover object-top"
-              />
+              <picture className="absolute inset-0 w-full h-full">
+                <source
+                  media="(max-width: 768px)"
+                  srcSet="/images/banner1-mobile.jpg"
+                />
+                <img
+                  src="/images/banner1.jpg"
+                  alt="Banner de joyería"
+                  className="w-full h-full object-cover object-top"
+                />
+              </picture>
               <div className="absolute inset-0 bg-black/0" />
               <div className="relative z-10 h-full flex items-center justify-center text-center px-6">
                 <div></div>
@@ -112,21 +118,33 @@ export default function Homepage() {
           </SwiperSlide>
           <SwiperSlide>
             <div className="relative h-screen">
-              <img
-                src="/images/banner2.jpg"
-                alt="Colección de joyería" 
-                className="absolute inset-0 w-full h-full object-cover object-top"
-              />
+              <picture className="absolute inset-0 w-full h-full">
+                <source
+                  media="(max-width: 768px)"
+                  srcSet="/images/banner2-mobile.jpg"
+                />
+                <img
+                  src="/images/banner2.jpg"
+                  alt="Colección de joyería"
+                  className="w-full h-full object-cover object-top"
+                />
+              </picture>
               <div className="absolute inset-0 bg-black/0" />
             </div>
           </SwiperSlide>
           <SwiperSlide>
             <div className="relative h-screen">
-              <img
-                src="/images/banner3.jpg"
-                alt="Joyas exclusivas" 
-                className="absolute inset-0 w-full h-full object-cover object-top"
-              />
+              <picture className="absolute inset-0 w-full h-full">
+                <source
+                  media="(max-width: 768px)"
+                  srcSet="/images/banner3-mobile.jpg"
+                />
+                <img
+                  src="/images/banner3.jpg"
+                  alt="Joyas exclusivas"
+                  className="w-full h-full object-cover object-top"
+                />
+              </picture>
               <div className="absolute inset-0 bg-black/0" />
             </div>
           </SwiperSlide>
@@ -191,17 +209,26 @@ export default function Homepage() {
       <Reveal>
         <CouponRevealViral />
       </Reveal>
+
       {/* CATEGORÍAS */}
       <Reveal>
         <section className="py-32 px-6 bg-[#0A0F1E]">
           <div className="max-w-7xl mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div className="group relative overflow-hidden rounded-[40px] h-[500px]">
-                <img
-                  src="/images/chain.jpg"
+
+              {/* Cadenas */}
+              <div className="group relative overflow-hidden rounded-[40px] h-[300px] md:h-[500px]">
+                <picture className="absolute inset-0 w-full h-full">
+                  <source
+                    media="(max-width: 768px)"
+                    srcSet="/images/chain-mobile.jpg"
+                  />
+                  <img
+                    src="/images/chain.jpg"
                     alt="Cadena de joyería"
-                  className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-all duration-700"
-                />
+                    className="w-full h-full object-cover group-hover:scale-110 transition-all duration-700"
+                  />
+                </picture>
                 <div className="absolute inset-0 bg-black/40" />
                 <div className="relative z-10 h-full flex items-end p-10">
                   <div>
@@ -214,12 +241,20 @@ export default function Homepage() {
                   </div>
                 </div>
               </div>
-              <div className="group relative overflow-hidden rounded-[40px] h-[500px]">
-                <img
-                  src="/images/ring.jpg"
+
+              {/* Anillos */}
+              <div className="group relative overflow-hidden rounded-[40px] h-[300px] md:h-[500px]">
+                <picture className="absolute inset-0 w-full h-full">
+                  <source
+                    media="(max-width: 768px)"
+                    srcSet="/images/ring-mobile.jpg"
+                  />
+                  <img
+                    src="/images/ring.jpg"
                     alt="Anillo de lujo"
-                  className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-all duration-700"
-                />
+                    className="w-full h-full object-cover group-hover:scale-110 transition-all duration-700"
+                  />
+                </picture>
                 <div className="absolute inset-0 bg-black/40" />
                 <div className="relative z-10 h-full flex items-end p-10">
                   <div>
@@ -232,12 +267,20 @@ export default function Homepage() {
                   </div>
                 </div>
               </div>
-              <div className="group relative overflow-hidden rounded-[40px] h-[500px]">
-                <img
-                  src="/images/watch.jpg"
+
+              {/* Relojes */}
+              <div className="group relative overflow-hidden rounded-[40px] h-[300px] md:h-[500px]">
+                <picture className="absolute inset-0 w-full h-full">
+                  <source
+                    media="(max-width: 768px)"
+                    srcSet="/images/watch-mobile.jpg"
+                  />
+                  <img
+                    src="/images/watch.jpg"
                     alt="Reloj exclusivo"
-                  className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-all duration-700"
-                />
+                    className="w-full h-full object-cover group-hover:scale-110 transition-all duration-700"
+                  />
+                </picture>
                 <div className="absolute inset-0 bg-black/40" />
                 <div className="relative z-10 h-full flex items-end p-10">
                   <div>
@@ -250,97 +293,105 @@ export default function Homepage() {
                   </div>
                 </div>
               </div>
+
             </div>
           </div>
         </section>
       </Reveal>
 
       {/* POR MENOS DE $800.000 */}
-     <section className="py-24 px-6 relative overflow-hidden">
-  <img
-    src="/images/banner4.jpg"
-    className="absolute inset-0 w-full h-full object-cover"
-    alt="background"
-  />
-  <div className="absolute inset-0 bg-black/50" />
-  <div className="relative z-10">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <p className="text-[#C9A84C] uppercase tracking-[0.4em] text-sm mb-4">
-              Accesible para ti
-            </p>
-            <h2 className="text-4xl md:text-6xl font-bold text-white">
-              Por menos de <span className="text-[#C9A84C]">$800.000</span>
-            </h2>
-            <p className="text-white/50 mt-4 text-sm">
-              Joyería de lujo al alcance de todos
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-            <Suspense
-              fallback={
-                <div className="text-white col-span-4 text-center">
-                  Cargando...
-                </div>
-              }
-            >
-              <Await resolve={featuredProducts}>
-                {(response: any) => {
-                  if (!response?.products?.nodes) return null;
-                  const affordable = response.products.nodes.filter(
-                    (p: any) =>
-                      parseFloat(p.priceRange.minVariantPrice.amount) < 800000,
-                  );
-                  if (affordable.length === 0)
-                    return (
-                      <div className="col-span-4 text-center text-white/40 py-12">
-                        Próximamente productos en esta categoría
-                      </div>
+      <section className="py-24 px-6 relative overflow-hidden">
+        <picture className="absolute inset-0 w-full h-full">
+          <source
+            media="(max-width: 768px)"
+            srcSet="/images/banner4-mobile.jpg"
+          />
+          <img
+            src="/images/banner4.jpg"
+            className="w-full h-full object-cover"
+            alt="background"
+          />
+        </picture>
+        <div className="absolute inset-0 bg-black/50" />
+        <div className="relative z-10">
+          <div className="max-w-7xl mx-auto">
+            <div className="text-center mb-16">
+              <p className="text-[#C9A84C] uppercase tracking-[0.4em] text-sm mb-4">
+                Accesible para ti
+              </p>
+              <h2 className="text-4xl md:text-6xl font-bold text-white">
+                Por menos de <span className="text-[#C9A84C]">$800.000</span>
+              </h2>
+              <p className="text-white/50 mt-4 text-sm">
+                Joyería de lujo al alcance de todos
+              </p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+              <Suspense
+                fallback={
+                  <div className="text-white col-span-4 text-center">
+                    Cargando...
+                  </div>
+                }
+              >
+                <Await resolve={featuredProducts}>
+                  {(response: any) => {
+                    if (!response?.products?.nodes) return null;
+                    const affordable = response.products.nodes.filter(
+                      (p: any) =>
+                        parseFloat(p.priceRange.minVariantPrice.amount) <
+                        800000,
                     );
-                  return affordable.map((product: any) => (
-                    <a
-                      key={product.id}
-                      href={`/products/${product.handle}`}
-                      className="group bg-[#0A0F1E] border border-white/10 rounded-2xl overflow-hidden hover:border-[#C9A84C] transition-all duration-500"
-                    >
-                      <div className="overflow-hidden aspect-square">
-                        <img
-                          src={product.featuredImage?.url}
-                          alt={product.title}
-                          className="w-full h-full object-cover group-hover:scale-110 transition-all duration-700"
-                        />
-                      </div>
-                      <div className="p-5">
-                        <h3 className="text-white font-medium text-base leading-tight">
-                          {product.title}
-                        </h3>
-                        <p className="mt-2 text-[#C9A84C] font-bold text-lg">
-                          $
-                          {parseFloat(
-                            product.priceRange.minVariantPrice.amount,
-                          ).toLocaleString('es-CO')}
-                        </p>
-                        <span className="mt-4 block text-center w-full bg-[#C9A84C] text-[#0A0F1E] py-2 rounded-full text-sm font-bold hover:bg-white transition-colors">
-                          Ver producto
-                        </span>
-                      </div>
-                    </a>
-                  ));
-                }}
-              </Await>
-            </Suspense>
+                    if (affordable.length === 0)
+                      return (
+                        <div className="col-span-4 text-center text-white/40 py-12">
+                          Próximamente productos en esta categoría
+                        </div>
+                      );
+                    return affordable.map((product: any) => (
+                      <a
+                        key={product.id}
+                        href={`/products/${product.handle}`}
+                        className="group bg-[#0A0F1E] border border-white/10 rounded-2xl overflow-hidden hover:border-[#C9A84C] transition-all duration-500"
+                      >
+                        <div className="overflow-hidden aspect-square">
+                          <img
+                            src={product.featuredImage?.url}
+                            alt={product.title}
+                            className="w-full h-full object-cover group-hover:scale-110 transition-all duration-700"
+                          />
+                        </div>
+                        <div className="p-5">
+                          <h3 className="text-white font-medium text-base leading-tight">
+                            {product.title}
+                          </h3>
+                          <p className="mt-2 text-[#C9A84C] font-bold text-lg">
+                            $
+                            {parseFloat(
+                              product.priceRange.minVariantPrice.amount,
+                            ).toLocaleString('es-CO')}
+                          </p>
+                          <span className="mt-4 block text-center w-full bg-[#C9A84C] text-[#0A0F1E] py-2 rounded-full text-sm font-bold hover:bg-white transition-colors">
+                            Ver producto
+                          </span>
+                        </div>
+                      </a>
+                    ));
+                  }}
+                </Await>
+              </Suspense>
+            </div>
+            <div className="text-center mt-12">
+              <motion.a
+                href="/collections/all"
+                whileHover={{scale: 1.05}}
+                whileTap={{scale: 0.95}}
+                className="inline-block px-10 py-3 border border-[#C9A84C] text-[#C9A84C] uppercase tracking-[0.3em] text-xs hover:bg-[#C9A84C] hover:text-[#0A0F1E] transition-all duration-300"
+              >
+                Explorar colección
+              </motion.a>
+            </div>
           </div>
-          <div className="text-center mt-12">
-            <motion.a
-              href="/collections/all"
-              whileHover={{scale: 1.05}}
-              whileTap={{scale: 0.95}}
-              className="inline-block px-10 py-3 border border-[#C9A84C] text-[#C9A84C] uppercase tracking-[0.3em] text-xs hover:bg-[#C9A84C] hover:text-[#0A0F1E] transition-all duration-300"
-            >
-              Explorar colección
-            </motion.a>
-          </div>
-        </div>
         </div>
       </section>
     </main>
@@ -447,4 +498,3 @@ export const COLLECTION_PRODUCTS_QUERY = `#graphql
     }
   }
 ` as const;
-
