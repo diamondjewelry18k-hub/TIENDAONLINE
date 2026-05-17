@@ -6,7 +6,7 @@ test.describe('Cart', () => {
   test('From home to checkout flow', async ({page}) => {
     // Home => Collections => First collection => First product
     await page.goto(`/`);
-    await page.locator(`header nav a:text-is("Collections")`).click();
+    await page.locator(`header nav a:text-is("Colecciones")`).click();
     await page.locator(`[data-test=collection-grid] a  >> nth=0`).click();
     await page.locator(`[data-test=product-grid] a  >> nth=0`).click();
 
