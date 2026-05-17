@@ -172,31 +172,16 @@ export default function Homepage() {
                   {(response: any) => {
                     if (!response?.products?.nodes) return null;
                     return response.products.nodes.map((product: any) => (
-                      <div
-                        key={product.id}
-                        className="group bg-[#0A0F1E] border border-white/10 rounded-[30px] overflow-hidden hover:border-[#C9A84C] transition-all duration-500"
-                      >
-                        <div className="overflow-hidden">
-                          <img
-                            src={product.featuredImage?.url}
-                            alt={product.title}
-                            className="w-full h-[350px] object-cover group-hover:scale-110 transition-all duration-700"
-                          />
-                        </div>
-                        <div className="p-6">
-                          <h3 className="text-2xl text-[#F8F6F0] font-semibold">
-                            {product.title}
-                          </h3>
-                          <p className="mt-4 text-[#C9A84C] text-xl font-bold">
-                            {product.priceRange.minVariantPrice.amount}{' '}
-                            {product.priceRange.minVariantPrice.currencyCode}
-                          </p>
-                          <a
-                            href={`/products/${product.handle}`}
-                            className="mt-6 w-full bg-[#1B3A6B] hover:bg-[#C9A84C] hover:text-[#0A0F1E] text-white py-4 rounded-full transition-all flex items-center justify-center"
-                          >
-                            Ver producto
+                      <div key={product.id} className="group relative flex flex-col bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300">
+                        <a href={`/products/${product.handle}`} className="block overflow-hidden bg-gray-50 aspect-square relative">
+                          <img src={product.featuredImage?.url} alt={product.title} width="400" height="400" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+                        </a>
+                        <div className="flex flex-col gap-3 p-4 flex-1">
+                          <a href={`/products/${product.handle}`}>
+                            <h3 className="text-sm font-medium text-[#0A0F1E] leading-snug line-clamp-2 hover:text-[#C9A84C] transition-colors">{product.title}</h3>
                           </a>
+                          <span className="text-[#C9A84C] font-bold text-base">${parseFloat(product.priceRange.minVariantPrice.amount).toLocaleString("es-CO")} {product.priceRange.minVariantPrice.currencyCode}</span>
+                          <a href={`/products/${product.handle}`} className="w-full mt-auto bg-[#0A0F1E] hover:bg-[#C9A84C] text-white hover:text-[#0A0F1E] text-xs font-bold uppercase tracking-widest py-3 rounded-full transition-all duration-300 text-center">Agregar al carrito</a>
                         </div>
                       </div>
                     ));
