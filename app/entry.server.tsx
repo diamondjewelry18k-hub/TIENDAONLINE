@@ -24,6 +24,19 @@ export default async function handleRequest(
       'https://www.googletagmanager.com',
       ...(process.env.NODE_ENV !== 'production' ? ['http://localhost:*'] : []),
     ],
+    styleSrc: [
+      'self',
+      'unsafe-inline',
+      'https://cdn.shopify.com',
+      'https://fonts.googleapis.com',
+      ...(process.env.NODE_ENV !== 'production' ? ['http://localhost:*'] : []),
+    ],
+    fontSrc: [
+      'self',
+      'https://fonts.gstatic.com',
+      'https://cdn.shopify.com',
+      'data:',
+    ],
   });
 
   const body = await renderToReadableStream(
@@ -47,6 +60,7 @@ export default async function handleRequest(
 
   responseHeaders.set('Content-Type', 'text/html');
   responseHeaders.set('Content-Security-Policy', header);
+
   return new Response(body, {
     headers: responseHeaders,
     status: responseStatusCode,
