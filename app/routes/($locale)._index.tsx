@@ -253,7 +253,6 @@ export default function Homepage() {
                 </picture>
                 <div className="absolute inset-0 bg-black/40" />
                 <div className="relative z-10 h-full flex items-end p-10">
-                  <div><p className="text-[#C9A84C] uppercase tracking-[0.3em] text-sm">Luxury</p><h2 className="text-5xl font-bold text-white mt-4">Cadenas</h2></div>
                 </div>
               </div>
               <div className="category-card group relative overflow-hidden rounded-[40px] h-[300px] md:h-[500px]">
@@ -263,7 +262,6 @@ export default function Homepage() {
                 </picture>
                 <div className="absolute inset-0 bg-black/40" />
                 <div className="relative z-10 h-full flex items-end p-10">
-                  <div><p className="text-[#C9A84C] uppercase tracking-[0.3em] text-sm">Premium</p><h2 className="text-5xl font-bold text-white mt-4">Anillos</h2></div>
                 </div>
               </div>
               <div className="category-card group relative overflow-hidden rounded-[40px] h-[300px] md:h-[500px]">
@@ -273,7 +271,6 @@ export default function Homepage() {
                 </picture>
                 <div className="absolute inset-0 bg-black/40" />
                 <div className="relative z-10 h-full flex items-end p-10">
-                  <div><p className="text-[#C9A84C] uppercase tracking-[0.3em] text-sm">Exclusive</p><h2 className="text-5xl font-bold text-white mt-4">Relojes</h2></div>
                 </div>
               </div>
             </div>
