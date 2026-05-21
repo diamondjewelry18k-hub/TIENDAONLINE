@@ -31,4 +31,4 @@ jobs:
 
       - name: Build and Publish to Oxygen
         run: |
-          npx shopify hydrogen deploy --auth-bypass-token --token "${{ secrets.OXYGEN_DEPLOYMENT_TOKEN_1000013955 }}"
+          npx shopify hydrogen deploy --auth-bypass-token --force --token "${{ secrets.OXYGEN_DEPLOYMENT_TOKEN_1000013955 }}"
