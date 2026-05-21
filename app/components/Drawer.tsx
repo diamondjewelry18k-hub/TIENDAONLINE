@@ -5,12 +5,8 @@ import {Heading} from '~/components/Text';
 import {IconClose} from '~/components/Icon';
 
 /**
- * Drawer component that opens on user click.
- * @param heading - string. Shown at the top of the drawer.
- * @param open - boolean state. if true opens the drawer.
- * @param onClose - function should set the open state.
- * @param openFrom - right, left
- * @param children - react children node.
+ * Drawer component — Diamond Jewelry Co
+ * Estilo WGK: overlay oscuro con blur, panel full-height, header sticky elegante
  */
 export function Drawer({
   heading,
@@ -33,23 +29,26 @@ export function Drawer({
   return (
     <Transition appear show={open} as={Fragment}>
       <Dialog as="div" className="relative z-50" onClose={onClose}>
+
+        {/* ── OVERLAY ── */}
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
-          enterFrom="opacity-0 left-0"
+          enterFrom="opacity-0"
           enterTo="opacity-100"
           leave="ease-in duration-200"
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div className="fixed inset-0 bg-black bg-opacity-25" />
+          {/* Antes: bg-opacity-25 (muy claro). Ahora: 60% oscuro + blur */}
+          <div className="fixed inset-0 bg-black/60 backdrop-blur-sm" />
         </Transition.Child>
 
         <div className="fixed inset-0">
           <div className="absolute inset-0 overflow-hidden">
             <div
               className={`fixed inset-y-0 flex max-w-full ${
-                openFrom === 'right' ? 'right-0' : ''
+                openFrom === 'right' ? 'right-0' : 'left-0'
               }`}
             >
               <Transition.Child
@@ -61,40 +60,61 @@ export function Drawer({
                 leaveFrom="translate-x-0"
                 leaveTo={offScreen[openFrom]}
               >
-                <Dialog.Panel className="w-[80vw] max-w-sm text-left align-middle transition-all transform shadow-xl h-screen-dynamic bg-[#0A0F1E] border-r border-white/10">
-                  <header
-                    className={`sticky top-0 flex items-center px-6 h-nav sm:px-8 md:px-12 border-b border-white/10 ${
-                      heading ? 'justify-between' : 'justify-end'
-                    }`}
-                  >
-                    {heading !== null && (
+                {/*
+                  Antes: w-[80vw] max-w-sm  → panel pequeño
+                  Ahora: w-full max-w-[390px] → cubre bien en móvil
+                  Borde cambia lado según openFrom
+                */}
+                <Dialog.Panel
+                  className={`w-full max-w-[390px] text-left transition-all transform shadow-2xl h-screen-dynamic bg-[#0A0F1E] flex flex-col ${
+                    openFrom === 'right'
+                      ? 'border-l border-white/10'
+                      : 'border-r border-white/10'
+                  }`}
+                >
+
+                  {/* ── HEADER DEL DRAWER ── */}
+                  <header className="flex items-center justify-between px-5 py-4 border-b border-white/10 shrink-0">
+                    {heading && (
                       <Dialog.Title>
-                        <Heading as="span" size="lead" id="cart-contents">
+                        <Heading
+                          as="span"
+                          size="lead"
+                          id="cart-contents"
+                          className="text-white font-bold text-base uppercase tracking-widest"
+                        >
                           {heading}
                         </Heading>
                       </Dialog.Title>
                     )}
                     <button
                       type="button"
-                      className="p-4 -m-4 transition text-white/70 hover:text-[#C9A84C]"
                       onClick={onClose}
                       data-test="close-cart"
+                      aria-label="Cerrar panel"
+                      className="w-9 h-9 flex items-center justify-center rounded-full text-white/50 hover:text-white hover:bg-white/10 transition-all duration-200 ml-auto"
                     >
-                      <IconClose aria-label="Close panel" />
+                      <IconClose aria-label="Cerrar" />
                     </button>
                   </header>
-                  {children}
+
+                  {/* ── CONTENIDO (Cart, MenuMobileNav, etc.) ── */}
+                  <div className="flex-1 overflow-hidden flex flex-col">
+                    {children}
+                  </div>
+
                 </Dialog.Panel>
               </Transition.Child>
             </div>
           </div>
         </div>
+
       </Dialog>
     </Transition>
   );
 }
 
-/* Use for associating arialabelledby with the title*/
+/* Para asociar arialabelledby con el título */
 Drawer.Title = Dialog.Title;
 
 export function useDrawer(openDefault = false) {
