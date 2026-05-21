@@ -3,15 +3,6 @@ import {
   type MetaArgs,
   type LoaderFunctionArgs,
 } from '@shopify/remix-oxygen';
-<<<<<<< HEAD
-import {Suspense} from 'react';
-import {Swiper, SwiperSlide} from 'swiper/react';
-import 'swiper/css';
-import {Autoplay, FreeMode, Pagination} from 'swiper/modules';
-import 'swiper/css/pagination';
-import {Await, useLoaderData, Link} from '@remix-run/react';
-import {getSeoMeta} from '@shopify/hydrogen';
-=======
 import {useEffect, useRef} from 'react';
 import DiamondBackground from '~/components/DiamondBackground';
 import {Suspense} from 'react';
@@ -23,7 +14,6 @@ import {getSeoMeta} from '@shopify/hydrogen';
 import {motion} from 'framer-motion';
 import {gsap} from 'gsap';
 import {ScrollTrigger} from 'gsap/ScrollTrigger';
->>>>>>> parent of 4cca940 (feat: rediseño estilo Linio/marketplace para tienda de accesorios)
 
 import CouponRevealViral from '~/components/CouponRevealViral';
 import Reveal from '~/components/Reveal';
