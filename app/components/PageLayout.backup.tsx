@@ -3,6 +3,7 @@ import useWindowScroll from 'react-use/esm/useWindowScroll';
 import {Disclosure} from '@headlessui/react';
 import {Suspense, useEffect, useMemo} from 'react';
 import {CartForm} from '@shopify/hydrogen';
+import {AnnouncementBar} from '~/components/AnnouncementBar';
 
 import {type LayoutQuery} from 'storefrontapi.generated';
 import {Text, Heading, Section} from '~/components/Text';
@@ -42,11 +43,7 @@ export function PageLayout({children, layout}: LayoutProps) {
   return (
     <>
       <div className="flex flex-col min-h-screen">
-        <div className="">
-          <a href="#mainContent" className="sr-only">
-            Skip to content
-          </a>
-        </div>
+        <a href="#mainContent" className="sr-only">Skip to content</a>
         {headerMenu && layout?.shop.name && (
           <Header title={layout.shop.name} menu={headerMenu} />
         )}
@@ -55,7 +52,57 @@ export function PageLayout({children, layout}: LayoutProps) {
         </main>
       </div>
       {footerMenu && <Footer menu={footerMenu} />}
+      <AnnouncementBar />
+      <MobileBottomNav />
     </>
+  );
+}
+function MobileBottomNav() {
+  const params = useParams();
+  const searchPath = params.locale ? `/${params.locale}/search` : '/search';
+  return (
+    <nav
+      className="lg:hidden"
+      style={{
+        position: 'fixed',
+        bottom: 0,
+        left: 0,
+        right: 0,
+        zIndex: 100,
+        background: '#0A0F1E',
+        borderTop: '1px solid rgba(201,168,76,0.2)',
+        display: 'flex',
+        justifyContent: 'space-around',
+        alignItems: 'center',
+        height: 60,
+        paddingBottom: 'env(safe-area-inset-bottom)',
+      }}
+    >
+      {[
+        {to: '/',                icon: '🏠', label: 'Inicio'},
+        {to: '/collections/all', icon: '🗂️', label: 'Catálogo'},
+        {to: searchPath,         icon: '🔍', label: 'Buscar'},
+        {to: '/account',         icon: '👤', label: 'Cuenta'},
+      ].map((item) => (
+        <Link
+          key={item.to}
+          to={item.to}
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            gap: 2,
+            fontSize: 10,
+            color: 'rgba(255,255,255,0.6)',
+            textDecoration: 'none',
+            padding: '6px 16px',
+          }}
+        >
+          <span style={{fontSize: 20}}>{item.icon}</span>
+          <span style={{letterSpacing: '0.05em', textTransform: 'uppercase'}}>{item.label}</span>
+        </Link>
+      ))}
+    </nav>
   );
 }
 
