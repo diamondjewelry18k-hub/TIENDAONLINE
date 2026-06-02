@@ -268,8 +268,7 @@ async function getLayoutData({storefront, env}: AppLoadContext) {
       : undefined;
 
     return {shop: data.shop, headerMenu, footerMenu};
-  } catch (error) {
-    console.error('Storefront layout query failed:', error);
+  } catch (_error) {
     return {
       shop: {
         name: 'Diamond Jewelry',

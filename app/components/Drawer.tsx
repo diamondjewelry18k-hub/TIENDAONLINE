@@ -29,7 +29,6 @@ export function Drawer({
   return (
     <Transition appear show={open} as={Fragment}>
       <Dialog as="div" className="relative z-50" onClose={onClose}>
-
         {/* ── OVERLAY ── */}
         <Transition.Child
           as={Fragment}
@@ -72,7 +71,6 @@ export function Drawer({
                       : 'border-r border-white/10'
                   }`}
                 >
-
                   {/* ── HEADER DEL DRAWER ── */}
                   <header className="flex items-center justify-between px-5 py-4 border-b border-white/10 shrink-0">
                     {heading && (
@@ -102,13 +100,11 @@ export function Drawer({
                   <div className="flex-1 overflow-hidden flex flex-col">
                     {children}
                   </div>
-
                 </Dialog.Panel>
               </Transition.Child>
             </div>
           </div>
         </div>
-
       </Dialog>
     </Transition>
   );

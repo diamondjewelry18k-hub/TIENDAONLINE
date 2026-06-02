@@ -3,9 +3,7 @@ import {
   type MetaArgs,
   type LoaderFunctionArgs,
 } from '@shopify/remix-oxygen';
-import {useEffect, useRef} from 'react';
-import DiamondBackground from '~/components/DiamondBackground';
-import {Suspense} from 'react';
+import {Suspense, useEffect, useRef} from 'react';
 import {Swiper, SwiperSlide} from 'swiper/react';
 import 'swiper/css';
 import {Autoplay, FreeMode, Navigation} from 'swiper/modules';
@@ -15,6 +13,7 @@ import {motion} from 'framer-motion';
 import {gsap} from 'gsap';
 import {ScrollTrigger} from 'gsap/ScrollTrigger';
 
+import DiamondBackground from '~/components/DiamondBackground';
 import CouponRevealViral from '~/components/CouponRevealViral';
 import Reveal from '~/components/Reveal';
 import {MEDIA_FRAGMENT} from '~/data/fragments';
@@ -43,8 +42,7 @@ async function loadCriticalData({context, request}: LoaderFunctionArgs) {
     .query(HOMEPAGE_SEO_QUERY, {
       variables: {handle: 'frontpage', country, language},
     })
-    .catch((error) => {
-      console.error('Homepage SEO query failed:', error);
+    .catch(() => {
       return {shop: null, hero: null};
     });
 
@@ -59,14 +57,12 @@ function loadDeferredData({context}: LoaderFunctionArgs) {
   const {language, country} = context.storefront.i18n;
   const featuredProducts = context.storefront
     .query(HOMEPAGE_FEATURED_PRODUCTS_QUERY, {variables: {country, language}})
-    .catch((error) => {
-      console.error(error);
+    .catch(() => {
       return null;
     });
   const collections = context.storefront
     .query(FEATURED_COLLECTIONS_QUERY, {variables: {country, language}})
-    .catch((error) => {
-      console.error(error);
+    .catch(() => {
       return null;
     });
   return {featuredProducts, collections};
@@ -113,12 +109,20 @@ export default function Homepage() {
           trigger: productsRef.current,
           start: 'top 85%',
           onEnter: () => {
-            const cards = productsRef.current!.querySelectorAll('.product-card');
+            const cards =
+              productsRef.current!.querySelectorAll('.product-card');
             if (cards.length > 0) {
               gsap.fromTo(
                 cards,
                 {opacity: 0, y: 50, scale: 0.95},
-                {opacity: 1, y: 0, scale: 1, duration: 0.7, stagger: 0.12, ease: 'power2.out'},
+                {
+                  opacity: 1,
+                  y: 0,
+                  scale: 1,
+                  duration: 0.7,
+                  stagger: 0.12,
+                  ease: 'power2.out',
+                },
               );
             }
           },
@@ -127,13 +131,18 @@ export default function Homepage() {
 
       // Affordable
       if (affordableRef.current) {
-        const cards = affordableRef.current.querySelectorAll('.affordable-card');
+        const cards =
+          affordableRef.current.querySelectorAll('.affordable-card');
         if (cards.length > 0) {
           gsap.fromTo(
             cards,
             {opacity: 0, y: 40},
             {
-              opacity: 1, y: 0, duration: 0.6, stagger: 0.1, ease: 'power2.out',
+              opacity: 1,
+              y: 0,
+              duration: 0.6,
+              stagger: 0.1,
+              ease: 'power2.out',
               scrollTrigger: {trigger: affordableRef.current, start: 'top 80%'},
             },
           );
@@ -149,42 +158,61 @@ export default function Homepage() {
 
   return (
     <main className="bg-[#0A0F1E] text-[#F8F6F0CF] min-h-screen overflow-hidden">
-
       {/* ── HERO SLIDER ── */}
       <section className="relative min-h-screen overflow-hidden">
+        {/* Shader background */}
+        <div className="absolute inset-0 z-0 opacity-40">
+          <DiamondBackground />
+        </div>
 
-  {/* Shader background */}
-  <div className="absolute inset-0 z-0 opacity-40">
-    <DiamondBackground />
-  </div>
-
-  <Swiper
-    className="relative z-20 h-screen"
-    modules={[Autoplay]}
-    autoplay={{delay: 4000, disableOnInteraction: false}}
-    loop
-  >
+        <Swiper
+          className="relative z-20 h-screen"
+          modules={[Autoplay]}
+          autoplay={{delay: 4000, disableOnInteraction: false}}
+          loop
+        >
           <SwiperSlide>
             <div className="relative h-screen">
               <picture className="absolute inset-0 w-full h-full">
-                <source media="(max-width: 768px)" srcSet="/images/banner1-mobile.jpg" />
-                <img src="/images/banner1.jpg" alt="Banner de joyería" className="w-full h-full object-cover object-top opacity-75"/>
+                <source
+                  media="(max-width: 768px)"
+                  srcSet="/images/banner1-mobile.jpg"
+                />
+                <img
+                  src="/images/banner1.jpg"
+                  alt="Banner de joyería"
+                  className="w-full h-full object-cover object-top opacity-75"
+                />
               </picture>
             </div>
           </SwiperSlide>
           <SwiperSlide>
             <div className="relative h-screen">
               <picture className="absolute inset-0 w-full h-full">
-                <source media="(max-width: 768px)" srcSet="/images/banner2-mobile.jpg" />
-                <img src="/images/banner2.jpg" alt="Colección de joyería" className="w-full h-full object-cover object-top opacity-75"/>
+                <source
+                  media="(max-width: 768px)"
+                  srcSet="/images/banner2-mobile.jpg"
+                />
+                <img
+                  src="/images/banner2.jpg"
+                  alt="Colección de joyería"
+                  className="w-full h-full object-cover object-top opacity-75"
+                />
               </picture>
             </div>
           </SwiperSlide>
           <SwiperSlide>
             <div className="relative h-screen">
               <picture className="absolute inset-0 w-full h-full">
-                <source media="(max-width: 768px)" srcSet="/images/banner3-mobile.jpg" />
-                <img src="/images/banner3.jpg" alt="Joyas exclusivas" className="w-full h-full object-cover object-top opacity-75" />
+                <source
+                  media="(max-width: 768px)"
+                  srcSet="/images/banner3-mobile.jpg"
+                />
+                <img
+                  src="/images/banner3.jpg"
+                  alt="Joyas exclusivas"
+                  className="w-full h-full object-cover object-top opacity-75"
+                />
               </picture>
             </div>
           </SwiperSlide>
@@ -196,17 +224,32 @@ export default function Homepage() {
         <section className="py-32 px-6 bg-[#0D1527]">
           <div className="max-w-7xl mx-auto">
             <div className="mb-16 text-center">
-              <p className="uppercase tracking-[0.3em] text-[#C9A84C] text-sm">Luxury Collection</p>
-              <h2 className="text-5xl md:text-7xl font-bold text-[#F8F6F0] mt-6">Productos Destacados</h2>
+              <p className="uppercase tracking-[0.3em] text-[#C9A84C] text-sm">
+                Luxury Collection
+              </p>
+              <h2 className="text-5xl md:text-7xl font-bold text-[#F8F6F0] mt-6">
+                Productos Destacados
+              </h2>
             </div>
-            <div ref={productsRef} className="grid grid-cols-1 md:grid-cols-4 gap-8">
-              <Suspense fallback={<div className="text-white">Cargando...</div>}>
+            <div
+              ref={productsRef}
+              className="grid grid-cols-1 md:grid-cols-4 gap-8"
+            >
+              <Suspense
+                fallback={<div className="text-white">Cargando...</div>}
+              >
                 <Await resolve={featuredProducts}>
                   {(response: any) => {
                     if (!response?.products?.nodes) return null;
                     return response.products.nodes.map((product: any) => (
-                      <div key={product.id} className="product-card group relative flex flex-col bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300">
-                        <a href={`/products/${product.handle}`} className="block overflow-hidden bg-gray-50 aspect-square relative">
+                      <div
+                        key={product.id}
+                        className="product-card group relative flex flex-col bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300"
+                      >
+                        <a
+                          href={`/products/${product.handle}`}
+                          className="block overflow-hidden bg-gray-50 aspect-square relative"
+                        >
                           <img
                             src={product.featuredImage?.url}
                             alt={product.title}
@@ -223,7 +266,10 @@ export default function Homepage() {
                             </h3>
                           </a>
                           <span className="text-[#C9A84C] font-bold text-base">
-                            ${parseFloat(product.priceRange.minVariantPrice.amount).toLocaleString('es-CO')}{' '}
+                            $
+                            {parseFloat(
+                              product.priceRange.minVariantPrice.amount,
+                            ).toLocaleString('es-CO')}{' '}
                             {product.priceRange.minVariantPrice.currencyCode}
                           </span>
                           <a
@@ -244,15 +290,21 @@ export default function Homepage() {
       </Reveal>
 
       {/* ── CUPÓN VIRAL ── */}
-      <Reveal><CouponRevealViral /></Reveal>
+      <Reveal>
+        <CouponRevealViral />
+      </Reveal>
 
       {/* ── CARRUSEL DE COLECCIONES ── */}
       <Reveal>
         <section className="py-20 px-6 bg-[#0A0F1E]">
           <div className="max-w-7xl mx-auto">
             <div className="mb-12 text-center">
-              <p className="uppercase tracking-[0.3em] text-[#C9A84C] text-sm">Explora</p>
-              <h2 className="text-4xl md:text-6xl font-bold text-[#F8F6F0] mt-4">Nuestras Colecciones</h2>
+              <p className="uppercase tracking-[0.3em] text-[#C9A84C] text-sm">
+                Explora
+              </p>
+              <h2 className="text-4xl md:text-6xl font-bold text-[#F8F6F0] mt-4">
+                Nuestras Colecciones
+              </h2>
             </div>
             <div className="relative">
               {/* Botones prev/next */}
@@ -261,8 +313,20 @@ export default function Homepage() {
                 className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-10 w-12 h-12 rounded-full bg-[#C9A84C] text-[#0A0F1E] flex items-center justify-center shadow-lg hover:bg-white transition-colors duration-300 hidden md:flex"
                 aria-label="Anterior"
               >
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2.5}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M15 19l-7-7 7-7"
+                  />
                 </svg>
               </button>
               <button
@@ -270,17 +334,37 @@ export default function Homepage() {
                 className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-10 w-12 h-12 rounded-full bg-[#C9A84C] text-[#0A0F1E] flex items-center justify-center shadow-lg hover:bg-white transition-colors duration-300 hidden md:flex"
                 aria-label="Siguiente"
               >
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2.5}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M9 5l7 7-7 7"
+                  />
                 </svg>
               </button>
 
-              <Suspense fallback={<div className="text-white text-center">Cargando colecciones...</div>}>
+              <Suspense
+                fallback={
+                  <div className="text-white text-center">
+                    Cargando colecciones...
+                  </div>
+                }
+              >
                 <Await resolve={collections}>
                   {(response: any) => {
                     const nodes = response?.collections?.nodes ?? [];
                     const ordered = COLLECTIONS.map((col) => {
-                      const found = nodes.find((n: any) => n.handle === col.handle);
+                      const found = nodes.find(
+                        (n: any) => n.handle === col.handle,
+                      );
                       return found ? {...found} : {...col, image: null};
                     });
                     return (
@@ -314,7 +398,9 @@ export default function Homepage() {
                                 />
                               ) : (
                                 <div className="w-full h-full bg-[#0D1527] flex items-center justify-center">
-                                  <span className="text-[#C9A84C] text-lg font-bold">{col.title}</span>
+                                  <span className="text-[#C9A84C] text-lg font-bold">
+                                    {col.title}
+                                  </span>
                                 </div>
                               )}
                             </a>
@@ -333,26 +419,48 @@ export default function Homepage() {
       {/* ── PRODUCTOS ACCESIBLES ── */}
       <section className="py-24 px-6 relative overflow-hidden">
         <picture className="absolute inset-0 w-full h-full">
-          <source media="(max-width: 768px)" srcSet="/images/banner4-mobile.jpg" />
-          <img src="/images/banner4.jpg" className="w-full h-full object-cover" alt="background" />
+          <source
+            media="(max-width: 768px)"
+            srcSet="/images/banner4-mobile.jpg"
+          />
+          <img
+            src="/images/banner4.jpg"
+            className="w-full h-full object-cover"
+            alt="background"
+          />
         </picture>
         <div className="absolute inset-0 bg-black/50" />
         <div className="relative z-10">
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-16">
-              <p className="text-[#C9A84C] uppercase tracking-[0.4em] text-sm mb-4">Accesible para ti</p>
+              <p className="text-[#C9A84C] uppercase tracking-[0.4em] text-sm mb-4">
+                Accesible para ti
+              </p>
               <h2 className="text-4xl md:text-6xl font-bold text-white">
                 Por menos de <span className="text-[#C9A84C]">$800.000</span>
               </h2>
-              <p className="text-white/50 mt-4 text-sm">Joyería de lujo al alcance de todos</p>
+              <p className="text-white/50 mt-4 text-sm">
+                Joyería de lujo al alcance de todos
+              </p>
             </div>
-            <div ref={affordableRef} className="grid grid-cols-1 md:grid-cols-4 gap-6">
-              <Suspense fallback={<div className="text-white col-span-4 text-center">Cargando...</div>}>
+            <div
+              ref={affordableRef}
+              className="grid grid-cols-1 md:grid-cols-4 gap-6"
+            >
+              <Suspense
+                fallback={
+                  <div className="text-white col-span-4 text-center">
+                    Cargando...
+                  </div>
+                }
+              >
                 <Await resolve={featuredProducts}>
                   {(response: any) => {
                     if (!response?.products?.nodes) return null;
                     const affordable = response.products.nodes.filter(
-                      (p: any) => parseFloat(p.priceRange.minVariantPrice.amount) < 800000,
+                      (p: any) =>
+                        parseFloat(p.priceRange.minVariantPrice.amount) <
+                        800000,
                     );
                     if (affordable.length === 0)
                       return (
@@ -374,9 +482,14 @@ export default function Homepage() {
                           />
                         </div>
                         <div className="p-5">
-                          <h3 className="text-white font-medium text-base leading-tight">{product.title}</h3>
+                          <h3 className="text-white font-medium text-base leading-tight">
+                            {product.title}
+                          </h3>
                           <p className="mt-2 text-[#C9A84C] font-bold text-lg">
-                            ${parseFloat(product.priceRange.minVariantPrice.amount).toLocaleString('es-CO')}
+                            $
+                            {parseFloat(
+                              product.priceRange.minVariantPrice.amount,
+                            ).toLocaleString('es-CO')}
                           </p>
                           <span className="mt-4 block text-center w-full bg-[#C9A84C] text-[#0A0F1E] py-2 rounded-full text-sm font-bold hover:bg-white transition-colors">
                             Ver producto
@@ -463,4 +576,3 @@ export const FEATURED_COLLECTIONS_QUERY = `#graphql
     }
   }
 ` as const;
-

@@ -1,5 +1,5 @@
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import {gsap} from 'gsap';
+import {ScrollTrigger} from 'gsap/ScrollTrigger';
 
 // Registrar plugins
 gsap.registerPlugin(ScrollTrigger);
@@ -8,8 +8,8 @@ gsap.registerPlugin(ScrollTrigger);
 export function fadeSlideUp(element: string | Element, delay = 0) {
   return gsap.fromTo(
     element,
-    { opacity: 0, y: 40 },
-    { opacity: 1, y: 0, duration: 0.7, delay, ease: 'power3.out' },
+    {opacity: 0, y: 40},
+    {opacity: 1, y: 0, duration: 0.7, delay, ease: 'power3.out'},
   );
 }
 
@@ -31,7 +31,7 @@ export function parallax(element: string | Element, speed = 0.5) {
 export function staggerFadeIn(elements: string, staggerTime = 0.1) {
   return gsap.fromTo(
     elements,
-    { opacity: 0, y: 30 },
+    {opacity: 0, y: 30},
     {
       opacity: 1,
       y: 0,
@@ -46,4 +46,4 @@ export function staggerFadeIn(elements: string, staggerTime = 0.1) {
   );
 }
 
-export { gsap, ScrollTrigger };
+export {gsap, ScrollTrigger};
