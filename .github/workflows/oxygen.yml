@@ -29,9 +29,6 @@ jobs:
       - name: Install dependencies
         run: pnpm install --no-frozen-lockfile
 
-      - name: Fix vite version
-        run: pnpm add vite@5.4.0 --save-exact
-
       - name: Build and Publish to Oxygen
         run: |
           npx shopify hydrogen deploy --auth-bypass-token --force --token "${{ secrets.OXYGEN_DEPLOYMENT_TOKEN_1000013955 }}"
