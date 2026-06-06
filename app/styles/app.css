@@ -145,3 +145,64 @@ body {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
+
+/* ── Hero Banner Mobile ──────────────────────── */
+.hero-banner {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+.hero-banner-img {
+  width: 100%;
+  object-fit: cover;
+  display: block;
+  max-height: 70vh;
+}
+.hero-banner-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(to bottom, rgba(3,46,80,0.15) 0%, rgba(3,46,80,0.55) 100%);
+  text-align: center;
+  padding: 2rem;
+}
+.hero-banner-sub {
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #C9A84C;
+  margin: 0 0 12px;
+}
+.hero-banner-title {
+  font-family: 'Cormorant Garamond', serif !important;
+  font-size: clamp(28px, 6vw, 72px);
+  font-weight: 300;
+  color: #F8F4ED;
+  margin: 0 0 20px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  line-height: 1.1;
+}
+.hero-banner-btn {
+  border: 1px solid #C9A84C;
+  color: #C9A84C;
+  background: transparent;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  padding: 10px 28px;
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s;
+}
+.hero-banner-btn:hover { background: #C9A84C; color: #032E50; }
+
+@media (max-width: 767px) {
+  .hero-banner-img {
+    max-height: 55vh;
+    min-height: 45vh;
+    object-position: center top;
+  }
+}
