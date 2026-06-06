@@ -57,7 +57,7 @@ export default function CollectionZoneProducts({collection, accentLabel}: Props)
             <div className="czp-info">
               <p className="czp-name">{product.title}</p>
               <div className="czp-price">
-                <Money data={product.priceRange.minVariantPrice} />
+                <Money data={product.priceRange.minVariantPrice as any} />
               </div>
             </div>
           </Link>
