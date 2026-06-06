@@ -1,13 +1,10 @@
 # Don't change the line below!
 #! oxygen_storefront_id: 1000013955
-
 name: Storefront 1000013955
 on: [push]
-
 permissions:
   contents: read
   deployments: write
-
 jobs:
   deploy:
     name: Deploy to Oxygen
@@ -15,20 +12,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
       - name: Setup node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-
       - name: Install pnpm
         uses: pnpm/action-setup@v4
         with:
           version: 10
-
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
-
       - name: Build and Publish to Oxygen
         run: |
           npx shopify hydrogen deploy --auth-bypass-token --force --token "${{ secrets.OXYGEN_DEPLOYMENT_TOKEN_1000013955 }}"
