@@ -3,16 +3,13 @@ import {
   type MetaArgs,
   type LoaderFunctionArgs,
 } from '@shopify/remix-oxygen';
-import {Suspense, useEffect, useRef} from 'react';
+import {Suspense, useEffect} from 'react';
 import {Await, useLoaderData} from '@remix-run/react';
 import {getSeoMeta} from '@shopify/hydrogen';
-import {gsap} from 'gsap';
-import {ScrollTrigger} from 'gsap/ScrollTrigger';
 
 import CollectionZoneProducts from '~/components/CollectionZoneProducts';
-import CouponRevealViral from '~/components/CouponRevealViral';
 import DiamondBackground from '~/components/DiamondBackground';
-import Reveal from '~/components/Reveal';
+import ProductGrid from '~/components/ProductGrid';
 import {MEDIA_FRAGMENT} from '~/data/fragments';
 import {seoPayload} from '~/lib/seo.server';
 import {routeHeaders} from '~/data/cache';
@@ -96,11 +93,7 @@ export default function Homepage() {
   const {featuredProducts, collections, pulseras, cadenas} =
     useLoaderData<typeof loader>();
 
-  const productsRef = useRef<HTMLDivElement>(null);
-  const affordableRef = useRef<HTMLDivElement>(null);
-
   useEffect(() => {
-    gsap.registerPlugin(ScrollTrigger);
 
     const purchases = [
       {name: 'María', product: 'Cadena Oro Italiano'},
@@ -154,60 +147,13 @@ export default function Homepage() {
 
     document.addEventListener('visibilitychange', handleVisibilityChange);
 
-    const animationTimer = setTimeout(() => {
-      if (productsRef.current) {
-        ScrollTrigger.create({
-          trigger: productsRef.current,
-          start: 'top 85%',
-          onEnter: () => {
-            const cards =
-              productsRef.current!.querySelectorAll('.product-card');
-            gsap.fromTo(
-              cards,
-              {opacity: 0, y: 50, scale: 0.95},
-              {
-                opacity: 1,
-                y: 0,
-                scale: 1,
-                duration: 0.7,
-                stagger: 0.12,
-                ease: 'power2.out',
-              },
-            );
-          },
-        });
-      }
-
-      if (affordableRef.current) {
-        const cards =
-          affordableRef.current.querySelectorAll('.affordable-card');
-        gsap.fromTo(
-          cards,
-          {opacity: 0, y: 40},
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.6,
-            stagger: 0.1,
-            ease: 'power2.out',
-            scrollTrigger: {
-              trigger: affordableRef.current,
-              start: 'top 80%',
-            },
-          },
-        );
-      }
-    }, 500);
-
     return () => {
       clearTimeout(firstPopupTimer);
-      clearTimeout(animationTimer);
       clearInterval(popupInterval);
       clearInterval(titleInterval);
       document.removeEventListener('visibilitychange', handleVisibilityChange);
       const popupElement = document.getElementById('purchase-popup');
       if (popupElement) popupElement.remove();
-      ScrollTrigger.getAll().forEach((t) => t.kill());
     };
   }, []);
 
@@ -215,7 +161,18 @@ export default function Homepage() {
     <>
       <DiamondBackground />
 
-      <Suspense>
+      <Suspense fallback={<div className="text-center py-10">Cargando productos...</div>}>
+        <Await resolve={featuredProducts}>
+          {(data) => (
+            <ProductGrid
+              products={(data as any)?.products ?? null}
+              title="Productos Destacados"
+            />
+          )}
+        </Await>
+      </Suspense>
+
+      <Suspense fallback={<div className="text-center py-10">Cargando colección...</div>}>
         <Await resolve={pulseras}>
           {(data) => (
             <CollectionZoneProducts
@@ -226,7 +183,7 @@ export default function Homepage() {
         </Await>
       </Suspense>
 
-      <Suspense>
+      <Suspense fallback={<div className="text-center py-10">Cargando colección...</div>}>
         <Await resolve={cadenas}>
           {(data) => (
             <CollectionZoneProducts
